@@ -1,0 +1,17 @@
+{
+  "name": "add-tags-js",
+  "version": "1.0.0",
+  "description": "Add tags assessment",
+  "main": "index.js",
+  "author": "Re:infer",
+  "license": "None",
+  "private": true,
+  "dependencies": {
+    "@types/node": "^14.0.14",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "scripts": {
+    "test": "ts-node add-tags.test.ts"
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Star Wars Character Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"
+    />
+  </head>
+  <body>
+    <div id="app" style="margin: 2em auto; max-width: 60em;">
+      <header>
+        <h1 class="title is-3">Star Wars Character Search</h1>
+      </header>
+      <form onsubmit="search(event)">
+        <div class="field">
+          <label class="label" for="character-name">Character name:</label>
+          <div class="control">
+            <input class="input" id="character-name" />
+          </div>
+        </div>
+        <div class="control">
+          <button class="button is-primary" type="submit">Submit</button>
+        </div>
+      </form>
+      <section id="results" style="margin-top: 1em;">
+        <p class="has-text-grey-light">Enter a search term above.</p>
+      </section>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
