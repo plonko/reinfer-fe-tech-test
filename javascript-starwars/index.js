@@ -1,5 +1,6 @@
+// Improvements wishlist:
 // Testing
-// imports
+// Modules/Imports
 
 "use strict";
 
@@ -61,7 +62,7 @@ async function getFilms(filmUris) {
 }
 
 function updateResults(results) {
-  const newResultsHtml = makeResultsHtml(results);
+  const newResultsHtml = makeResultsHtml.start(results);
   const resultsContainer = document.getElementById("results");
 
   if (resultsContainer.firstElementChild) {
@@ -70,49 +71,55 @@ function updateResults(results) {
   resultsContainer.appendChild(newResultsHtml);
 }
 
-function createNode(element) {
-  return document.createElement(element);
-}
+const makeResultsHtml = (function () {
+  const classes = {
+    character: "is-size-4 has-text-weight-bold",
+    film: "is-size-6 has-text-grey",
+    noResults: "no-results",
+  };
+  const text = {
+    noResults: "Sorry, there were no matching results.",
+  };
 
-function makeResultsHtml(results) {
-  if (!results) {
-    return makeNoResultsElem();
+  function createNode(element) {
+    return document.createElement(element);
   }
-  const { character, films } = results;
 
-  const resultsDiv = createNode("div");
-  const nameElement = makeCharacterElem(character.name);
-  const listElement = makeFilmElem(films);
+  function start(results) {
+    if (!results) {
+      return makeElem("p", classes.noResults, text.noResults);
+    }
+    const { character, films } = results;
 
-  resultsDiv.appendChild(nameElement);
-  resultsDiv.appendChild(listElement);
+    const resultsDiv = createNode("div");
+    const nameElement = makeElem("p", classes.character, character.name);
+    const listElement = makeFilmElem(films);
 
-  return resultsDiv;
-}
+    resultsDiv.appendChild(nameElement);
+    resultsDiv.appendChild(listElement);
 
-function makeFilmElem(films) {
-  const listElement = createNode("ul");
+    return resultsDiv;
+  }
 
-  films.forEach(({ title }) => {
-    const filmElement = createNode("li");
-    filmElement.className = "is-size-6 has-text-grey";
-    filmElement.innerText = title;
-    listElement.appendChild(filmElement);
-  });
+  function makeElem(elementType, classes, text) {
+    const element = createNode(elementType);
+    element.className = classes;
+    element.innerText = text;
+    return element;
+  }
 
-  return listElement;
-}
+  function makeFilmElem(films) {
+    const listElement = createNode("ul");
 
-function makeCharacterElem(name) {
-  const nameElement = createNode("p");
-  nameElement.className = "is-size-4 has-text-weight-bold";
-  nameElement.innerText = name;
-  return nameElement;
-}
+    films.forEach(({ title }) => {
+      const filmElement = makeElem("li", classes.film, title);
+      listElement.appendChild(filmElement);
+    });
 
-function makeNoResultsElem() {
-  const messageElement = createNode("p");
-  messageElement.className = "no-results";
-  messageElement.innerText = "Sorry, there were no matching results.";
-  return messageElement;
-}
+    return listElement;
+  }
+
+  return {
+    start: start,
+  };
+})();
